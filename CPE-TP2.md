@@ -4,29 +4,137 @@
 
 **1. Dans quels dossiers bash trouve-t-il les commandes tapées par l’utilisateur ?**
 
+```
+serveur@serveur:~$ printenv PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+```
+
 **2. Quelle variable d’environnement permet à la commande cd tapée sans argument de vous ramener dans
 votre répertoire personnel ?**
 
+```
+serveur@serveur:~$ printenv
+SHELL=/bin/bash
+PWD=/home/serveur
+LOGNAME=serveur
+XDG_SESSION_TYPE=tty
+HOME=/home/serveur
+LANG=fr_FR.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SSH_CONNECTION=10.0.2.2 56750 10.0.2.15 22
+LESSCLOSE=/usr/bin/lesspipe %s %s
+XDG_SESSION_CLASS=user
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=serveur
+SHLVL=1
+XDG_SESSION_ID=3
+XDG_RUNTIME_DIR=/run/user/1000
+SSH_CLIENT=10.0.2.2 56750 22
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+MAIL=/var/mail/serveur
+SSH_TTY=/dev/pts/0
+_=/usr/bin/printenv
+```
+
+Selon la liste des variables disponibles. J'en déduis qu'il s'agit de la varaible lié au dossier personnel, c'est à dire HOME.
+
 **3. Explicitez le rôle des variables LANG, PWD, OLDPWD, SHELL et _**
 
+```
+serveur@serveur:~$ serveur@serveur:~$ printenv LANG
+fr_FR.UTF-8
+serveur@serveur:~$ printenv PWD
+/home/serveur
+serveur@serveur:~$ printenv OLDPWD
+serveur@serveur:~$ printenv SHELL
+/bin/bash
+serveur@serveur:~$ printenv _**
+```
+
+Selon une (documentation trouvé en ligne)[https://www.computernetworkingnotes.com/rhce-study-guide/linux-environment-variables-list-set-create-remove.html] ces variables ont les rôles suivant:
+
+`LANG` Permet de définir le language préférer.
+
+`PWD` **P**resent **W**orking **D**irectory permet de définir le chemin du dossier de travail actuel.
+
+`OLDPWD` Old **P**rexportesent **W**orking **D**irectory permet de définir l'ancien chemin du dossier de travail actuel. Utile pour la commande `cd -`.
+
+`SHELL` Permet de récupérer le chemin absolus de l'invite de commande actuellement utilisé.
+
+`_**` Permet de récupérer la dernière commandé effectué par l'utilisateur.
+
 **4. Créez une variable locale MY_VAR (le contenu n’a pas d’importance). Vérifiez que la variable existe.**
+
+```
+serveur@serveur:~$ MY_VAR="salut !"
+serveur@serveur:~$ echo $MY_VAR
+salut !
+```
 
 **5. Tapez ensuite la commande bash. Que fait-elle ? La variable MY_VAR existe-t-elle ? Expliquez. A la fin
 de cette question, tapez la commande exit pour revenir dans votre session initiale.**
 
+```
+serveur@serveur:~$ bash
+serveur@serveur:~$ echo $MY_VAR
+serveur@serveur:~$ 
+```
+
+la variable n'existe plus. Cela est normale car celle-ci n'est uniquement sauvegardé dans la session actuel. Hors la commande bash crée une nouvelle session bash et switch l'utilisateur sur celle-ci.
+
 **6. Transformez MY_VAR en une variable d’environnement et recommencez la question précédente. Expliquez.**
+
+```
+serveur@serveur:~$ export MY_VAR="salut !"
+serveur@serveur:~$ printenv $MY_VAR
+salut !
+serveur@serveur:~$ bash
+serveur@serveur:~$ printenv $MY_VAR
+salut !
+```
+
+Une variable d'environnement est définis dans l'environnement globale. Cela signifie que peu importe la session, la variable sera disponible et utilisable.
 
 **7. Créer la variable d’environnement NOMS ayant pour contenu vos noms de binômes séparés par un espace.
 Afficher la valeur de NOMS pour vérifier que l’affectation est correcte.**
 
+```
+serveur@serveur:~$ export NOMS="Desbrosses Eloi Amourer Robin"
+serveur@serveur:~$ printenv NOMS
+Desbrosses Eloi Amourer Robin
+```
+
 **8. Ecrivez une commande qui affiche ”Bonjour à vous deux, binôme1 binôme2 !” (où binôme1 et binôme2
 sont vos deux noms) en utilisant la variable NOMS.**
 
-**9. Quelle différence y a-t-il entre donner une valeur vide à une variable et l’utilisation de la commande
-unset ?**
+```
+serveur@serveur:~$ echo "Bonjour à vous deux, $NOMS !"
+Bonjour à vous deux, Desbrosses Eloi Amourer Robin !
+```
+
+**9. Quelle différence y a-t-il entre donner une valeur vide à une variable et l’utilisation de la commande unset ?**
+
+```
+serveur@serveur:~$ export TESTVARIABLE=
+serveur@serveur:~$ printenv TESTVARIABLE
+
+serveur@serveur:~$ unset TESTVARIABLE
+serveur@serveur:~$ printenv TESTVARIABLE
+serveur@serveur:~$
+```
+
+Une variable vide est initialisé mais n'as aucune valeur. Une variable unset n'existe pas et ne retourne aucune valeur.
 
 **10. Utilisez la commande echo pour écrire exactement la phrase : $HOME = chemin (où chemin est votre
 dossier personnel d’après bash)**
+
+```
+serveur@serveur:~$ echo "\$HOME = $HOME"
+$HOME = /home/serveur
+serveur@serveur:~$
+```
 
 ## Exercice 2. Contrôle de mot de passe
 
