@@ -142,6 +142,24 @@ serveur@serveur:~$
 contenu d’une variable PASSWORD dont le contenu est codé en dur dans le script. Le mot de passe saisi par
 l’utilisateur ne doit pas s’afficher.**
 
+```
+#!/bin/bash
+
+passwordToCheck="JaimeLesPringles"
+
+#Demande à l'utilisateur un mot de passe
+
+echo "Salut ! Donne moi ton mot de passe svp."
+
+read password
+
+if [[ $passwordToCheck = $password ]]; then
+        echo "Excellent ! Ton mot de passe fonctionne !"
+else
+        echo "Aie, ton mot de passe ne correspond pas :("
+fi
+```
+
 ## Exercice 3. Expressions rationnelles
 
 **Ecrivez un script qui prend un paramètre et utilise la fonction suivante pour vérifier que ce paramètre
@@ -159,6 +177,34 @@ fi
 }
 ```
 **Il affichera un message d’erreur dans le cas contraire.**
+
+```
+#!/bin/bash
+
+function is_number()
+{
+re='^[+-]?[0-9]+([.][0-9]+)?$'
+if ! [[ $1 =~ $re ]] ; then
+return 1
+else
+return 0
+fi
+}
+
+
+if [ -z "$1" ]; then
+        echo "Aucun argument passé"
+else
+
+        is_number $1
+
+        if [ $? -eq 0 ]; then
+                echo "Ton nombre est réel !"
+        else
+                echo "Ton nombre n'est pas réel :("
+        fi
+fi
+```
 
 ## Exercice 4. Contrôle d’utilisateu
 r
