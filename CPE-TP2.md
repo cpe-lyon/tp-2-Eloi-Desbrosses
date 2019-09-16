@@ -63,7 +63,7 @@ Selon une (documentation trouvé en ligne)[https://www.computernetworkingnotes.c
 
 `SHELL` Permet de récupérer le chemin absolus de l'invite de commande actuellement utilisé.
 
-`_**` Permet de récupérer la dernière commandé effectué par l'utilisateur.
+`_` Permet de récupérer la dernière commandé effectué par l'utilisateur.
 
 **4. Créez une variable locale MY_VAR (le contenu n’a pas d’importance). Vérifiez que la variable existe.**
 
@@ -151,7 +151,7 @@ passwordToCheck="JaimeLesPringles"
 
 echo "Salut ! Donne moi ton mot de passe svp."
 
-read password
+read -s password
 
 if [[ $passwordToCheck = $password ]]; then
         echo "Excellent ! Ton mot de passe fonctionne !"
@@ -209,14 +209,46 @@ fi
 ## Exercice 4. Contrôle d’utilisateu
 r
 **Écrivez un script qui vérifie l’existence d’un utilisateur dont le nom est donné en paramètre du script. Si le
-script est appelé sans nom d’utilisateur, il affiche le message : ”Utilisation : nom_du_script nom_utilisateur”,
-où nom_du_script est le nom de votre script récupéré automatiquement (si vous changez le nom de votre
+script est appelé sans nom d’utilisateur, il affiche le message : ”Utilisation : nom_du_script nom_utilisateur”,bas où nom_du_script est le nom de votre script récupéré automatiquement (si vous changez le nom de votre
 script, le message doit changer automatiquement)**
+
+```
+#!/bin/bash
+
+if [ -z "$1" ]; then
+        echo "Utilisation : $0 [nom_utilisateur]"
+else
+        if [[ ! $( id -u $1 2>/dev/null ) ]]; then
+                echo "Utilisateur inexistant"
+        else
+                echo "Utilisateur existant"
+        fi
+fi
+```
 
 ## Exercice 5. Factorielle
 
 **Écrivez un programme qui calcule la factorielle d’un entier naturel passé en paramètre (on supposera que
 l’utilisateur saisit toujours un entier naturel).**
+
+```
+#!/bin/bash
+
+if [ $# -gt "0" ]; then
+
+        resultat=$1
+
+        for i in $(seq $(( $1-1 )) -1 1)
+        do
+                let resultat=resultat*i
+        done
+
+
+        echo $resultat
+else
+        echo "Aucun chiffre passé en paramètre"
+fi
+```
 
 ## Exercice 6. Le juste prix
 
