@@ -441,6 +441,7 @@ backgroundColor=(40 41 42 43 44 45 46 47 49 100 101 102 103 104 105 106 107)
 
 for colorVal in ${textColor[@]}; do
         for backgroundVal in ${backgroundColor[@]}; do
-                echo -e "\e[${backgroundVal}m\e[${colorVal}mCouleur de text: $colorVal; Couleur de fond$        done
+                echo -e "\e[${backgroundVal}m\e[${colorVal}mCouleur de text: $colorVal; Couleur de fond$        
+        done
 done
 ```
