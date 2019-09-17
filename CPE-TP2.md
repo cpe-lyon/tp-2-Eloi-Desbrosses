@@ -427,3 +427,20 @@ echo "Max: $max; Min: $min; Average: $average"
 ## Exercice 8. Pour les plus rapides
 
 **Écrivez un script qui affiche les combinaisons possibles de couleurs (cf. TP 1) :**
+
+```
+#!/bin/bash
+
+echo "If you are epileptic, you might want to look away, it's gonna get crazy...I'll let you 5 seconds"
+
+sleep 5s
+
+textColor=(30 31 32 33 34 35 36 37 38 39 90 91 92 93 94 95 96 97)
+
+backgroundColor=(40 41 42 43 44 45 46 47 49 100 101 102 103 104 105 106 107)
+
+for colorVal in ${textColor[@]}; do
+        for backgroundVal in ${backgroundColor[@]}; do
+                echo -e "\e[${backgroundVal}m\e[${colorVal}mCouleur de text: $colorVal; Couleur de fond$        done
+done
+```
