@@ -255,17 +255,175 @@ fi
 **Écrivez un script qui génère un nombre aléatoire entre 1 et 1000 et demande à l’utilisateur de le deviner.
 Le programme écrira ”C’est plus !”, ”C’est moins !” ou ”Gagné !” selon les cas (vous utiliserez $RANDOM).**
 
+```
+#!/bin/bash
+
+secretNumber=$(( ( RANDOM % 1000 ) + 1 ))
+
+while :
+do
+        read -p "Entrez un chiffre entre 1 et 1000: " answer
+
+        if [ -z "$answer" ]; then
+                continue
+        else
+                if [[ $answer > $secretNumber ]]; then
+                        echo "C'est moins !"
+                        continue
+                elif [[ $answer < $secretNumber ]]; then
+                        echo "C'est plus !"
+                        continue
+                else
+                        echo "Gagné !"
+                        break
+                fi
+        fi
+done
+```
+
 ## Exercice 7. Statistiques
 
-**1. Écrivez un script qui prend en paramètres trois entiers (entre -100 et +100) et affiche le min, le max
-et la moyenne. Vous pouvez réutiliser la fonction de l’exercice 3 pour vous assurer que les paramètres
+**1. Écrivez un script qui prend en paramètres trois entiers (entre -100 et +100) et affiche le min, le max et la moyenne. Vous pouvez réutiliser la fonction de l’exercice 3 pour vous assurer que les paramètres
 sont bien des entiers.**
 
+```
+function is_number()
+{
+re='^[+-]?[0-9]+([.][0-9]+)?$'
+        if ! [[ $1 =~ $re ]] ; then
+                return 1
+        else
+                return 0
+        fi
+}
+
+if [[ $# != 3 ]]; then
+        echo "Arguments manquants: 3 arguments nécessaire."
+        exit 1
+fi
+
+max=-100
+min=100
+total=0
+
+for var in "$@"
+do
+        if [ "$var" -gt "100" ] || [ "$var" -lt "-100" ]; then
+                echo "Veuillez utiliser 3 nombres réelle entre 100 et -100"
+                exit 1
+        fi
+
+        if [ $var -gt $max ]; then
+                let max=$var
+        fi
+
+        if [ $var -lt $min ]; then
+                let min=$var
+        fi
+
+        let total=total+$var
+done
+
+let average=$total/$#
+echo "Max: $max; Min: $min; Average: $average"
+```
+
 **2. Généralisez le programme à un nombre quelconque de paramètres (pensez à SHIFT)**
+
+```
+function is_number()
+{
+re='^[+-]?[0-9]+([.][0-9]+)?$'
+        if ! [[ $1 =~ $re ]] ; then
+                return 1
+        else
+                return 0
+        fi
+}
+
+max=-100
+min=100
+total=0
+
+for var in "$@"
+do
+        if [ "$var" -gt "100" ] || [ "$var" -lt "-100" ]; then
+                echo "Veuillez utiliser 3 nombres réelle entre 100 et -100"
+                exit 1
+        fi
+
+        if [ $var -gt $max ]; then
+                let max=$var
+        fi
+
+        if [ $var -lt $min ]; then
+                let min=$var
+        fi
+
+        let total=total+$var
+done
+
+let average=$total/$#
+echo "Max: $max; Min: $min; Average: $average"
+```
+
+La raison pour laquelle je n'ai pas utilisé SHIFT est que j'ai pensé au script après avoir lue les 3 questions. Cela me parait plus simple à mettre en place.
 
 **3. Modifiez votre programme pour que les notes ne soient plus données en paramètres, mais saisies et
 stockées au fur et à mesure dans un tableau.**
 
+```
+function is_number()
+{
+re='^[+-]?[0-9]+([.][0-9]+)?$'
+        if ! [[ $1 =~ $re ]] ; then
+                return 1
+        else
+                return 0
+        fi
+}
+
+arrayValues=()
+
+while :
+do
+        echo "Veuillez saisir un nombre à ajouter ou taper \"next\" pour passer à la suite:"
+        read value
+
+        if [ "$value" = "next" ]; then
+                break
+        fi
+
+        arrayValues+=($value)
+
+done
+
+max=-100
+min=100
+total=0
+
+for var in "${arrayValues[@]}"
+do
+        if [ "$var" -gt "100" ] || [ "$var" -lt "-100" ]; then
+                echo "Veuillez utiliser 3 nombres réelle entre 100 et -100"
+                exit 1
+        fi
+
+        if [ $var -gt $max ]; then
+                let max=$var
+        fi
+
+        if [ $var -lt $min ]; then
+                let min=$var
+        fi
+        
+        let total=total+$var
+done
+
+let average=$total/${#arrayValues[@]}
+echo "Max: $max; Min: $min; Average: $average"
+```
+        
 ## Exercice 8. Pour les plus rapides
 
 **Écrivez un script qui affiche les combinaisons possibles de couleurs (cf. TP 1) :**
